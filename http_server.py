@@ -1,4 +1,3 @@
-
 import socket
 import sys
 import threading
@@ -7,20 +6,22 @@ import threading
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #proses binding
-server_address = ('localhost', 13000)
+server_address = ('localhost', 8011)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 
 #listening
 sock.listen(1)
 
-
-def response_teks():
+def response_hal_depan():
+	filedepan = open('index.html','r').read()
+	panjang = len(filedepan)
+	
 	hasil = "HTTP/1.1 200 OK\r\n" \
-		"Content-Type: text/plain\r\n" \
-		"Content-Length: 7\r\n" \
+		"Content-Type: text/html; charset=utf-8\r\n" \
+		"Content-Length: {}\r\n" \
 		"\r\n" \
-		"PROGJAR"
+		"{}" . format(panjang, filedepan)
 	return hasil
 
 def response_video_mp4():
@@ -63,15 +64,11 @@ def response_icon():
 		"{}" . format(panjang, filegambar)
 	return hasil
 
-
-
 def response_redirect():
 	hasil = "HTTP/1.1 301 Moved Permanently\r\n" \
 		"Location: {}\r\n" \
 		"\r\n"  . format('http://www.its.ac.id')
 	return hasil
-
-
 
 
 #fungsi melayani client
@@ -93,13 +90,13 @@ def layani_client(koneksi_client,alamat_client):
        a,url,c = baris_request.split(" ")
        
        
-       if (url=='/coba'):
-          respon = response_redirect()
-       elif (url=='/videomp4'):
+       if (url=='/front'):
+          respon = response_hal_depan()
+       elif (url=='/front/videomp4'):
           respon = response_video_mp4() 
-       elif (url=='/videoflv'):
+       elif (url=='/front/videoflv'):
           respon = response_video_flv() 
-       elif (url=='/video3gp'):
+       elif (url=='/front/video3gp'):
           respon = response_video_3gp() 
        koneksi_client.send(respon)
     finally:
