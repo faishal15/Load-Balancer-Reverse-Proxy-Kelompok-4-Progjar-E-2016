@@ -33,6 +33,26 @@ def response_video_mp4():
 		"{}" . format(panjang, filevideo)
 	return hasil
 
+def response_video_flv():
+	filevideo = open('vidflv','r').read()
+	panjang = len(filevideo)
+	hasil = "HTTP/1.1 200 OK\r\n" \
+		"Content-Type: video/x-flv\r\n" \
+		"Content-Length: {}\r\n" \
+		"\r\n" \
+		"{}" . format(panjang, filevideo)
+	return hasil
+
+def response_video_3gp():
+	filevideo = open('vid3gp','r').read()
+	panjang = len(filevideo)
+	hasil = "HTTP/1.1 200 OK\r\n" \
+		"Content-Type: video/3gp\r\n" \
+		"Content-Length: {}\r\n" \
+		"\r\n" \
+		"{}" . format(panjang, filevideo)
+	return hasil
+
 def response_icon():
 	filegambar = open('myicon.png','r').read()
 	panjang = len(filegambar)
@@ -43,15 +63,7 @@ def response_icon():
 		"{}" . format(panjang, filegambar)
 	return hasil
 
-def response_dokumen():
-	filedokumen = open('dok.pdf','r').read()
-	panjang = len(filedokumen)
-	hasil = "HTTP/1.1 200 OK\r\n" \
-		"Content-Type: application/pdf\r\n" \
-		"Content-Length: {}\r\n" \
-		"\r\n" \
-		"{}" . format(panjang, filedokumen)
-	return hasil
+
 
 def response_redirect():
 	hasil = "HTTP/1.1 301 Moved Permanently\r\n" \
@@ -80,17 +92,15 @@ def layani_client(koneksi_client,alamat_client):
  	
        a,url,c = baris_request.split(" ")
        
-       if (url=='/favicon.ico'):
-          respon = response_icon()
-       elif (url=='/doc'):
-	  respon = response_dokumen()
-       elif (url=='/coba'):
+       
+       if (url=='/coba'):
           respon = response_redirect()
        elif (url=='/videomp4'):
           respon = response_video_mp4() 
-       else:
-          respon = response_gambar()
-
+       elif (url=='/videoflv'):
+          respon = response_video_flv() 
+       elif (url=='/video3gp'):
+          respon = response_video_3gp() 
        koneksi_client.send(respon)
     finally:
         # Clean up the connection
