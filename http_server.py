@@ -24,6 +24,17 @@ def response_hal_depan():
 		"{}" . format(panjang, filedepan)
 	return hasil
 
+def response_hal_wrong():
+	filedirect = open('wrong.html','r').read()
+	panjang = len(filedirect)
+
+	hasil = "HTTP/1.1 200 OK\r\n" \
+		"Content-Type: text/html; charset=utf-8\r\n" \
+		"Content-Length: {}\r\n" \
+		"\r\n" \
+		"{}" . format(panjang, filedirect)
+	return hasil
+
 def response_video_mp4():
 	filevideo = open('vidmp4','r').read()
 	panjang = len(filevideo)
