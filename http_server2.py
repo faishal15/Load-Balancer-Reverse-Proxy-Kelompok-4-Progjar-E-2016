@@ -102,7 +102,7 @@ def layani_client(koneksi_client,alamat_client):
 
 
        if (url=='/front'):
-          respon = response_redirect()
+          respon = response_hal_depan()
        elif (url=='/front/videomp4'):
           respon = response_video_mp4()
        elif (url=='/front/videoflv'):
