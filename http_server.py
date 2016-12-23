@@ -109,7 +109,7 @@ def layani_client(koneksi_client,alamat_client):
           respon = response_video_flv() 
        elif (url=='/front/video3gp'):
           respon = response_video_3gp()
-	else:
+       else:
           respon = response_hal_wrong()
        koneksi_client.send(respon)
     finally:
